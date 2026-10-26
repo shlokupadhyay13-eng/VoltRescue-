@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VoltRescue — P2P EV Emergency Charging Grid</title>
 
+  <!-- Google Fonts: Geist & Geist Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
   <!-- Tailwind CSS & FontAwesome -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,6 +20,19 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <style>
+    :root,
+    body,
+    .font-sans {
+      font-family: 'Geist', 'Inter', system-ui, -apple-system, sans-serif !important;
+      font-size-adjust: from-font;
+    }
+
+    .font-mono {
+      font-family: 'Geist Mono', 'JetBrains Mono', ui-monospace, monospace !important;
+      font-feature-settings: "tnum" 1;
+      font-variant-numeric: tabular-nums;
+    }
+
     /* Clean custom scrollbar */
     ::-webkit-scrollbar {
       width: 5px;
@@ -104,7 +122,7 @@
           <div class="flex items-center gap-2">
             <h1 class="text-base font-bold tracking-tight text-white">VoltRescue</h1>
             <span
-              class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">P2P
+              class="text-[10px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">P2P
               Network</span>
           </div>
           <p class="text-[11px] text-zinc-400">Autonomous Decentralized EV Rescue Grid</p>
@@ -115,7 +133,7 @@
       <div
         class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs shadow-inner">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="text-zinc-300 font-medium">Local Ollama: <strong class="text-emerald-400 font-mono">Gemma 4
+        <span class="text-zinc-300 font-medium">Local Ollama: <strong class="text-emerald-400 font-semibold">Gemma 4
             (Active)</strong></span>
       </div>
     </header>
@@ -126,19 +144,19 @@
       <!-- COLUMN 1: Driver Telemetry & SOS (3 Cols) -->
       <section class="lg:col-span-3 flex flex-col gap-4">
         <div
-          class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-5 backdrop-blur-md shadow-xl flex flex-col gap-4">
+          class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-5 backdrop-blur-md shadow-xl flex flex-col gap-4 transition-all duration-200 ease-out">
           <div class="flex items-center justify-between pb-3 border-b border-zinc-800/80">
             <h2 class="text-xs font-bold tracking-wider text-zinc-300 uppercase flex items-center gap-2">
               <i class="fa-solid fa-sliders text-emerald-400"></i> EV Telemetry
             </h2>
-            <span class="text-[10px] text-zinc-500 font-mono">LIVE SENSORS</span>
+            <span class="text-[10px] text-zinc-500 font-semibold uppercase tracking-wider">LIVE SENSORS</span>
           </div>
 
           <!-- Vehicle Model -->
           <div>
             <label class="block text-xs font-semibold text-zinc-400 mb-1">Vehicle Model</label>
             <input type="text" id="ev-model" value="Tata Nexon EV Max"
-              class="w-full bg-zinc-950/70 border border-zinc-800/80 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-cyan-500 transition">
+              class="w-full bg-zinc-950/70 border border-zinc-800/80 rounded-xl px-3 py-2 text-xs text-zinc-100 hover:border-zinc-700 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200 ease-out">
           </div>
 
           <!-- Battery Meter Slider with Low-Battery Warning Pill -->
@@ -147,14 +165,14 @@
               <div class="flex items-center gap-2">
                 <label class="text-xs font-semibold text-zinc-400">Remaining Battery</label>
                 <span id="battery-status-badge"
-                  class="px-2 py-0.5 rounded-full text-[10px] font-semibold font-mono bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center gap-1">
+                  class="px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center gap-1">
                   <i class="fa-solid fa-triangle-exclamation text-[9px]"></i> Low Battery Warning
                 </span>
               </div>
               <span id="battery-val-text" class="text-xs font-bold font-mono text-amber-400">8%</span>
             </div>
             <input type="range" id="battery-range" min="1" max="100" value="8"
-              class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+              class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-amber-500 transition-all duration-200 ease-out hover:opacity-90">
             <div class="w-full bg-zinc-950 rounded-full h-2 mt-2 p-0.5 border border-zinc-800/80">
               <div id="battery-bar" class="h-full bg-amber-500 rounded-full transition-all duration-300"
                 style="width: 8%;"></div>
@@ -165,7 +183,7 @@
           <div>
             <label class="block text-xs font-semibold text-zinc-400 mb-1">Connector Port</label>
             <select id="port-type"
-              class="w-full bg-zinc-950/70 border border-zinc-800/80 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-cyan-500 transition">
+              class="w-full bg-zinc-950/70 border border-zinc-800/80 rounded-xl px-3 py-2 text-xs text-zinc-100 hover:border-zinc-700 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200 ease-out cursor-pointer">
               <option value="Type 2" selected>Type 2 AC (Fast AC)</option>
               <option value="CCS2">CCS2 (DC Fast Charge)</option>
               <option value="15A Socket">15A Standard Domestic Socket</option>
@@ -178,25 +196,25 @@
               <label
                 class="block text-[10px] text-zinc-500 mb-0.5 uppercase tracking-wider font-semibold">Latitude</label>
               <input type="text" id="lat-input" value="18.5204"
-                class="w-full bg-zinc-950/70 border border-zinc-800/80 rounded-lg px-2.5 py-1.5 text-xs text-zinc-300 font-mono">
+                class="w-full bg-zinc-950/70 border border-zinc-800/80 rounded-lg px-2.5 py-1.5 text-xs text-zinc-300 font-mono hover:border-zinc-700 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200 ease-out">
             </div>
             <div>
               <label
                 class="block text-[10px] text-zinc-500 mb-0.5 uppercase tracking-wider font-semibold">Longitude</label>
               <input type="text" id="lng-input" value="73.8567"
-                class="w-full bg-zinc-950/70 border border-zinc-800/80 rounded-lg px-2.5 py-1.5 text-xs text-zinc-300 font-mono">
+                class="w-full bg-zinc-950/70 border border-zinc-800/80 rounded-lg px-2.5 py-1.5 text-xs text-zinc-300 font-mono hover:border-zinc-700 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200 ease-out">
             </div>
           </div>
 
           <!-- Auto-Detect GPS -->
           <button id="locate-btn" type="button"
-            class="w-full text-xs py-2 px-3 rounded-xl bg-zinc-800/60 hover:bg-zinc-800 text-zinc-300 border border-zinc-700/60 flex items-center justify-center gap-2 transition active:scale-[0.99]">
+            class="w-full text-xs py-2 px-3 rounded-xl bg-zinc-800/60 hover:bg-zinc-800 hover:text-zinc-100 hover:border-zinc-600/80 text-zinc-300 border border-zinc-700/60 flex items-center justify-center gap-2 transition-all duration-200 ease-out active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40 cursor-pointer">
             <i class="fa-solid fa-crosshairs text-cyan-400"></i> Auto-Detect My GPS Location
           </button>
 
           <!-- SOS Broadcast CTA -->
           <button id="sos-btn" type="button"
-            class="mt-2 w-full py-3.5 px-4 rounded-xl font-bold text-xs bg-gradient-to-r from-rose-600 via-red-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 shadow-lg shadow-rose-950/60 border border-rose-500/40 text-white flex items-center justify-center gap-2.5 tracking-wider transition active:scale-[0.98]">
+            class="mt-2 w-full py-3.5 px-4 rounded-xl font-bold text-xs bg-gradient-to-r from-rose-600 via-red-600 to-rose-700 hover:from-rose-500 hover:via-red-500 hover:to-rose-600 active:from-rose-700 active:to-red-700 shadow-lg shadow-rose-950/60 hover:shadow-xl hover:shadow-rose-950/80 border border-rose-500/40 hover:border-rose-400/60 text-white flex items-center justify-center gap-2.5 tracking-wider transition-all duration-200 ease-out active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100 cursor-pointer">
             <i class="fa-solid fa-tower-broadcast animate-pulse"></i>
             <span id="sos-btn-text">BROADCAST EMERGENCY SOS</span>
           </button>
@@ -208,7 +226,7 @@
 
         <!-- Interactive Leaflet Map (Dark Styled, No Watermark) -->
         <div
-          class="bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden backdrop-blur-md shadow-xl flex flex-col h-[380px] relative">
+          class="bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden backdrop-blur-md shadow-xl flex flex-col h-[380px] relative transition-all duration-200 ease-out">
           <div
             class="px-4 py-2.5 border-b border-zinc-800/80 bg-zinc-950/70 flex items-center justify-between text-xs font-semibold text-zinc-300">
             <span class="flex items-center gap-2"><i class="fa-solid fa-map-location-dot text-cyan-400"></i> Grid Radar
@@ -222,39 +240,39 @@
 
         <!-- Gemma 4 Dispatch Decision Card -->
         <div id="dispatch-card"
-          class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-5 backdrop-blur-md shadow-xl flex flex-col gap-3">
+          class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-5 backdrop-blur-md shadow-xl flex flex-col gap-3 transition-all duration-200 ease-out">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-zinc-300 uppercase tracking-wider flex items-center gap-2">
               <i class="fa-solid fa-shield-halved text-emerald-400"></i> Gemma 4 Dispatch Recommendation
             </span>
             <span id="priority-badge"
-              class="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">
               HIGH PRIORITY
             </span>
           </div>
 
           <div class="grid grid-cols-2 gap-3 pt-1">
-            <div class="bg-zinc-950/60 p-3 rounded-xl border border-zinc-800/70">
-              <span class="text-[10px] text-zinc-500 block mb-0.5 uppercase font-semibold">Matched Host</span>
-              <p id="card-host-name" class="font-bold text-zinc-100 text-sm">Kavita Rao</p>
+            <div class="bg-zinc-950/60 p-3 rounded-xl border border-zinc-800/70 hover:border-zinc-700 hover:bg-zinc-950/80 transition-all duration-200 ease-out">
+              <span class="text-[10px] text-zinc-500 block mb-0.5 uppercase tracking-wider font-semibold">Matched Host</span>
+              <p id="card-host-name" class="font-bold tracking-tight text-zinc-100 text-sm">Kavita Rao</p>
               <span id="card-host-dist" class="text-xs text-cyan-400 font-medium font-mono">1.63 km away</span>
             </div>
-            <div class="bg-zinc-950/60 p-3 rounded-xl border border-zinc-800/70">
-              <span class="text-[10px] text-zinc-500 block mb-0.5 uppercase font-semibold">Charger Spec</span>
-              <p id="card-charger-spec" class="font-bold text-emerald-400 text-sm">7.2 kW (Type 2)</p>
+            <div class="bg-zinc-950/60 p-3 rounded-xl border border-zinc-800/70 hover:border-zinc-700 hover:bg-zinc-950/80 transition-all duration-200 ease-out">
+              <span class="text-[10px] text-zinc-500 block mb-0.5 uppercase tracking-wider font-semibold">Charger Spec</span>
+              <p id="card-charger-spec" class="font-bold font-mono text-emerald-400 text-sm">7.2 kW (Type 2)</p>
               <span id="card-rate" class="text-xs text-zinc-400 font-mono">₹13 / kWh</span>
             </div>
           </div>
 
           <div
-            class="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs">
+            class="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs hover:border-emerald-500/40 hover:bg-emerald-500/[0.14] transition-all duration-200 ease-out">
             <span class="text-zinc-300 flex items-center gap-1.5"><i class="fa-solid fa-bolt text-emerald-400"></i> ETA
               to 30% Charge:</span>
             <span id="card-eta-30" class="font-bold font-mono text-emerald-300 text-sm">~45 mins</span>
           </div>
 
-          <div class="bg-zinc-950/50 p-3 rounded-xl border border-zinc-800/70 text-xs text-zinc-300">
-            <strong class="text-zinc-200 block mb-1 flex items-center gap-1.5">
+          <div class="bg-zinc-950/50 p-3 rounded-xl border border-zinc-800/70 text-xs text-zinc-300 hover:border-zinc-700 transition-all duration-200 ease-out">
+            <strong class="text-zinc-200 block mb-1 flex items-center gap-1.5 tracking-tight font-semibold">
               <i class="fa-solid fa-microchip text-cyan-400"></i> Driver Advisory Note
             </strong>
             <p id="card-driver-briefing" class="leading-relaxed text-zinc-400">
@@ -266,7 +284,7 @@
 
       <!-- COLUMN 3: Gemma 4 Copilot Hub (4 Cols) -->
       <section
-        class="lg:col-span-4 flex flex-col h-[700px] bg-zinc-900/60 border border-zinc-800/80 rounded-2xl backdrop-blur-md shadow-xl overflow-hidden">
+        class="lg:col-span-4 flex flex-col h-[700px] bg-zinc-900/60 border border-zinc-800/80 rounded-2xl backdrop-blur-md shadow-xl overflow-hidden transition-all duration-200 ease-out">
 
         <div class="px-5 py-3.5 border-b border-zinc-800/80 bg-zinc-950/70 flex items-center justify-between">
           <div class="flex items-center gap-2.5">
@@ -274,13 +292,12 @@
               <i class="fa-solid fa-robot"></i>
             </div>
             <div>
-              <h3 class="text-xs font-bold text-zinc-200">Gemma 4 EV Copilot</h3>
+              <h3 class="text-xs font-bold tracking-tight text-zinc-200">Gemma 4 EV Copilot</h3>
               <p class="text-[10px] text-zinc-400">100% Local Inference (Ollama)</p>
             </div>
           </div>
           <span
-            class="text-[10px] text-emerald-400 font-mono bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">PORT
-            11434</span>
+            class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20"><span class="font-semibold uppercase tracking-wider">PORT</span> <span class="font-mono font-medium">11434</span></span>
         </div>
 
         <!-- Chat Conversation Messages -->
@@ -301,17 +318,17 @@
         <!-- Quick Query Chips -->
         <div class="px-3 py-2 border-t border-zinc-800/60 bg-zinc-950/40 flex gap-1.5 overflow-x-auto">
           <button type="button"
-            class="quick-chip shrink-0 text-[11px] px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/60 transition"
+            class="quick-chip shrink-0 text-[11px] px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700/80 hover:text-white hover:border-cyan-500/40 text-zinc-300 border border-zinc-700/60 transition-all duration-200 ease-out active:scale-[0.97] focus:outline-none cursor-pointer"
             data-query="Can I safely charge an EV on a domestic 15A home socket?">
             ⚡ 15A Socket Safe?
           </button>
           <button type="button"
-            class="quick-chip shrink-0 text-[11px] px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/60 transition"
+            class="quick-chip shrink-0 text-[11px] px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700/80 hover:text-white hover:border-cyan-500/40 text-zinc-300 border border-zinc-700/60 transition-all duration-200 ease-out active:scale-[0.97] focus:outline-none cursor-pointer"
             data-query="How much range can I realistically squeeze out of 5% battery?">
             📍 Range at 5%?
           </button>
           <button type="button"
-            class="quick-chip shrink-0 text-[11px] px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/60 transition"
+            class="quick-chip shrink-0 text-[11px] px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700/80 hover:text-white hover:border-cyan-500/40 text-zinc-300 border border-zinc-700/60 transition-all duration-200 ease-out active:scale-[0.97] focus:outline-none cursor-pointer"
             data-query="How should I negotiate payment with an emergency host?">
             🤝 Payment Advice?
           </button>
@@ -320,9 +337,9 @@
         <!-- Chat Input Form -->
         <form id="chat-form" class="p-3 border-t border-zinc-800 bg-zinc-950/80 flex items-center gap-2">
           <input type="text" id="chat-input" placeholder="Ask Gemma 4 anything..."
-            class="flex-1 bg-zinc-900 border border-zinc-700/80 rounded-xl px-3 py-2 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-cyan-500 transition">
+            class="flex-1 bg-zinc-900 border border-zinc-700/80 rounded-xl px-3 py-2 text-xs text-zinc-100 placeholder-zinc-500 hover:border-zinc-600 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200 ease-out">
           <button type="submit"
-            class="w-9 h-9 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 text-zinc-950 font-bold flex items-center justify-center transition shrink-0 hover:opacity-90">
+            class="w-9 h-9 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 text-zinc-950 font-bold flex items-center justify-center transition-all duration-200 ease-out shrink-0 hover:opacity-95 hover:shadow-lg hover:shadow-emerald-500/25 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 cursor-pointer">
             <i class="fa-solid fa-paper-plane text-xs"></i>
           </button>
         </form>
